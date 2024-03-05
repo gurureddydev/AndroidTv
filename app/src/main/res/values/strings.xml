@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">AndroidTv</string>
+    <string name="poster_image">poster_image</string>
+    <string name="language_english">Language : English</string>
+    <string name="title">Title</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>
