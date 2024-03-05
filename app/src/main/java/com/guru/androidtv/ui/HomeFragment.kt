@@ -1,4 +1,4 @@
-package com.guru.androidtv
+package com.guru.androidtv.ui
 
 import android.content.Intent
 import android.os.Bundle
@@ -6,15 +6,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.google.gson.Gson
+import com.guru.androidtv.R
 import com.guru.androidtv.databinding.FragmentHomeBinding
-import java.io.BufferedReader
-import java.io.InputStream
-import java.io.InputStreamReader
+import com.guru.androidtv.viewmodel.HomeFragmentViewModel
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var viewModel: HomeFragmentViewModel
     val listFragment = ListFragment()
 
     override fun onCreateView(
@@ -23,21 +23,17 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
+        viewModel = ViewModelProvider(this).get(HomeFragmentViewModel::class.java)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         addFragment(listFragment)
-
-        val gson = Gson()
-        val i: InputStream = requireContext().assets.open("movies.json")
-        val br = BufferedReader(InputStreamReader(i))
-        val dataList: DataModel = gson.fromJson(br, DataModel::class.java)
-        listFragment.bindData(dataList)
+        viewModelObserver()
 
         listFragment.setOnContentSelectedListener {
-            updateBanner(it)
+            //
         }
 
         listFragment.setOnItemClickListener {
@@ -47,18 +43,27 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun viewModelObserver() {
+        viewModel.dataList.observe(viewLifecycleOwner) { dataList ->
+            val firstResult = dataList.results.firstOrNull()
+            listFragment.bindData(dataList)
+            if (firstResult != null) {
+                // Access and update UI components with the data from the first result
+                binding.title.text = firstResult.title
+                binding.subtitle.text = "Language: ${firstResult.original_language}"
+                binding.description.text = firstResult.overview
+                val imageUrl = "https://www.themoviedb.org/t/p/w500${firstResult.poster_path}"
+                Glide.with(requireContext())
+                    .load(imageUrl)
+                    .into(binding.imgBanner)
+            }
+        }
+    }
+
+
     private fun addFragment(castFragment: ListFragment) {
         val transaction = childFragmentManager.beginTransaction()
         transaction.add(R.id.list_fragment, castFragment)
         transaction.commit()
-    }
-
-    private fun updateBanner(dataList: DataModel.Result.Detail) {
-        binding.title.text = dataList.title
-        binding.description.text = dataList.overview
-
-        val url =
-            "https://www.themoviedb.org/t/p/w780" + dataList.backdrop_path
-        Glide.with(this).load(url).into(binding.imageViewBanner)
     }
 }

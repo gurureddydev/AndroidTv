@@ -4,165 +4,186 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:background="#282828"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="#282828">
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_top"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintGuide_percent=".075"
-            />
+            app:layout_constraintGuide_percent=".075" />
 
         <androidx.constraintlayout.widget.Guideline
             android:id="@+id/guideline_start"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            app:layout_constraintGuide_percent=".055"
-            />
+            app:layout_constraintGuide_percent=".055" />
 
         <ImageView
-            android:id="@+id/imageBanner"
+            android:id="@+id/imgBanner"
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:adjustViewBounds="true"
             android:src="@drawable/ic_language"
-            app:layout_constraintWidth_percent=".6"
             app:layout_constraintDimensionRatio="16:9"
-            app:layout_constraintWidth_default="percent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            />
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".6" />
 
         <View
             android:id="@+id/horizontal_gradient"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintStart_toStartOf="@id/guideline_start"
             android:background="@drawable/banner_gradient"
-            app:layout_constraintWidth_percent=".75"
-            />
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".75" />
 
         <View
             android:id="@+id/vertical_gradient"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="@id/guideline_start"
             android:background="@drawable/gradient_vertical"
-            app:layout_constraintWidth_percent=".75"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHeight_default="percent"
+            app:layout_constraintHeight_percent=".7"
+            app:layout_constraintStart_toStartOf="@id/guideline_start"
             />
 
         <TextView
             android:id="@+id/title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_white"
+            android:fontFamily="sans-serif-black"
             android:text="Avatar : The way of water"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent=".42"
+            android:textColor="@color/color_white"
             android:textSize="26sp"
             app:layout_constraintStart_toEndOf="@id/guideline_start"
             app:layout_constraintTop_toBottomOf="@id/guideline_top"
-            />
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".42" />
 
         <TextView
-            android:id="@+id/subTitle"
+            android:id="@+id/subtitle"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_white"
+            android:layout_marginTop="10dp"
+            android:fontFamily="sans-serif-black"
             android:text="Avatar : The way of water"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent=".42"
+            android:textColor="@color/color_white"
             android:textSize="13sp"
-            android:layout_marginTop="10sp"
             app:layout_constraintStart_toEndOf="@id/guideline_start"
             app:layout_constraintTop_toBottomOf="@id/title"
-            />
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".42" />
+
         <TextView
             android:id="@+id/description"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:textColor="@color/color_white"
-            android:text="Avatar : The way of water"
-            app:layout_constraintWidth_default="percent"
-            app:layout_constraintWidth_percent=".42"
-            android:layout_marginTop="10sp"
-            android:textSize="13sp"
+            android:layout_marginTop="12dp"
+            android:ellipsize="end"
+            android:lineSpacingMultiplier="1.2"
             android:maxLines="3"
+            android:text="Avatar : The way of water"
+            android:textColor="@color/color_white"
+            android:textSize="13sp"
             app:layout_constraintStart_toEndOf="@id/guideline_start"
-            app:layout_constraintTop_toBottomOf="@id/subTitle"
-            />
+            app:layout_constraintTop_toBottomOf="@id/subtitle"
+            app:layout_constraintWidth_default="percent"
+            app:layout_constraintWidth_percent=".42" />
+
+        <TextView
+            android:id="@+id/show_more"
+            app:layout_constraintStart_toEndOf="@+id/description"
+            app:layout_constraintBottom_toBottomOf="@+id/description"
+            android:nextFocusDown="@id/play"
+            android:textColor="@color/color_white"
+            android:focusable="true"
+            android:clickable="true"
+            android:text="Show more"
+            android:textSize="13sp"
+            android:padding="1dp"
+            android:background="@drawable/btn_selector"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
 
         <TextView
             android:id="@+id/play"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_selector"
+            android:drawableLeft="@drawable/ic_play"
+            android:drawablePadding="8dp"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:focusedByDefault="true"
+            android:nextFocusDown="@id/more_like_this"
+            android:padding="8dp"
             android:text="Play"
-            android:textSize="16sp"
-            android:padding="8dp"
-            android:drawablePadding="8dp"
-            android:background="@drawable/btn_selector"
             android:textColor="@color/color_white"
-            app:layout_constraintTop_toBottomOf="@id/description"
+            android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/description"
             app:layout_constraintWidth_default="percent"
-            android:drawableStart="@drawable/ic_play"
-            app:layout_constraintWidth_percent=".3"/>
+            app:layout_constraintWidth_percent=".3" />
 
         <TextView
-            android:id="@+id/more_like_these"
+            android:id="@+id/more_like_this"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_selector"
+            android:drawableLeft="@drawable/ic_more"
+            android:drawablePadding="8dp"
             android:focusable="true"
             android:focusableInTouchMode="true"
+            android:focusedByDefault="true"
+            android:nextFocusDown="@id/add_to_mylist"
+            android:padding="8dp"
             android:text="More Like This"
-            android:textSize="16sp"
-            android:padding="8dp"
-            android:drawablePadding="8dp"
-            android:background="@drawable/btn_selector"
             android:textColor="@color/color_white"
-            app:layout_constraintTop_toBottomOf="@id/play"
+            android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/play"
             app:layout_constraintWidth_default="percent"
-            android:drawableStart="@drawable/ic_more_24"
-            app:layout_constraintWidth_percent=".3"/>
+            app:layout_constraintWidth_percent=".3" />
 
         <TextView
-            android:id="@+id/add_to_my_list"
+            android:id="@+id/add_to_mylist"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/btn_selector"
+            android:drawableLeft="@drawable/ic_more"
+            android:drawablePadding="8dp"
             android:focusable="true"
             android:focusableInTouchMode="true"
-            android:text="Add to My List"
-            android:textSize="16sp"
+            android:focusedByDefault="true"
             android:padding="8dp"
-            android:drawablePadding="8dp"
-            android:background="@drawable/btn_selector"
+            android:text="Add to My List"
             android:textColor="@color/color_white"
-            app:layout_constraintTop_toBottomOf="@id/more_like_these"
+            android:textSize="16sp"
             app:layout_constraintStart_toEndOf="@id/guideline_start"
+            app:layout_constraintTop_toBottomOf="@+id/more_like_this"
             app:layout_constraintWidth_default="percent"
-            android:drawableStart="@drawable/ic_more_24"
-            app:layout_constraintWidth_percent=".3"/>
+            app:layout_constraintWidth_percent=".3" />
 
         <androidx.fragment.app.FragmentContainerView
             android:id="@+id/cast_fragment"
+            android:name="com.guru.androidtv.ui.ListFragment"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@id/add_to_my_list"
             android:layout_marginTop="20dp"
-            android:name="com.guru.androidtv.ListFragment"/>
+            app:layout_constraintTop_toBottomOf="@+id/add_to_mylist" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </layout>

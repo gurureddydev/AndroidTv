@@ -1,4 +1,4 @@
-package com.guru.androidtv
+package com.guru.androidtv.ui
 
 import android.os.Bundle
 import android.view.KeyEvent
@@ -8,13 +8,14 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.leanback.widget.BrowseFrameLayout
-import com.guru.androidtv.fragments.HelpFragment
-import com.guru.androidtv.fragments.LanguageFragment
-import com.guru.androidtv.fragments.MovieFragment
-import com.guru.androidtv.fragments.SearchFragment
-import com.guru.androidtv.fragments.SettingsFragment
-import com.guru.androidtv.fragments.SportsFragment
-import com.guru.androidtv.fragments.TvShowFragment
+import com.guru.androidtv.R
+import com.guru.androidtv.ui.fragments.HelpFragment
+import com.guru.androidtv.ui.fragments.LanguageFragment
+import com.guru.androidtv.ui.fragments.MovieFragment
+import com.guru.androidtv.ui.fragments.SearchFragment
+import com.guru.androidtv.ui.fragments.SettingsFragment
+import com.guru.androidtv.ui.fragments.SportsFragment
+import com.guru.androidtv.ui.fragments.TvShowFragment
 import com.guru.androidtv.utils.Common
 import com.guru.androidtv.utils.Constants
 

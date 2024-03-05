@@ -1,9 +1,8 @@
-package com.guru.androidtv
+package com.guru.androidtv.ui
 
 import android.os.Bundle
-import android.view.LayoutInflater
+import android.util.Log
 import android.view.View
-import android.view.ViewGroup
 import androidx.leanback.app.RowsSupportFragment
 import androidx.leanback.widget.ArrayObjectAdapter
 import androidx.leanback.widget.BaseOnItemViewClickedListener
@@ -15,11 +14,14 @@ import androidx.leanback.widget.OnItemViewSelectedListener
 import androidx.leanback.widget.Presenter
 import androidx.leanback.widget.Row
 import androidx.leanback.widget.RowPresenter
+import com.guru.androidtv.presenter.CastItemPresenter
+import com.guru.androidtv.presenter.ItemPresenter
 import com.guru.androidtv.model.CastResponse
+import com.guru.androidtv.model.DataModel
 
 class ListFragment : RowsSupportFragment() {
-    private var itemSelectedListener: ((DataModel.Result.Detail) -> Unit)? = null
-    private var itemClickListener: ((DataModel.Result.Detail) -> Unit)? = null
+    private var itemSelectedListener: ((com.guru.androidtv.model.Result) -> Unit)? = null
+    private var itemClickListener: ((com.guru.androidtv.model.Result) -> Unit)? = null
     private var rootAdapter: ArrayObjectAdapter =
         ArrayObjectAdapter(ListRowPresenter(FocusHighlight.ZOOM_FACTOR_MEDIUM))
 
@@ -32,16 +34,16 @@ class ListFragment : RowsSupportFragment() {
     }
 
     fun bindData(dataList: DataModel) {
-        dataList.result.forEachIndexed { _, result ->
-            val arrayObjectAdapter = ArrayObjectAdapter(ItemPresenter())
-            result.details.forEach { dataModelResult ->
-                arrayObjectAdapter.add(dataModelResult)
-            }
+        rootAdapter.clear()
 
-            val headerItem = HeaderItem(result.title)
-            val listRow = ListRow(headerItem, arrayObjectAdapter)
-            rootAdapter.add(listRow)
+        val header = HeaderItem(0, "Movies")
+        val arrayAdapter = ArrayObjectAdapter(ItemPresenter())
+        for ((index, result) in dataList.results.withIndex()) {
+            arrayAdapter.add(result)
+            Log.d("ListFragment", "Adding item at index $index: $result")
         }
+        val movieRow = ListRow(header, arrayAdapter)
+        rootAdapter.add(movieRow)
     }
 
     fun bindCastData(list: List<CastResponse.Cast>) {
@@ -50,16 +52,16 @@ class ListFragment : RowsSupportFragment() {
             arrayObjectAdapter.add(context)
         }
 
-        val headerItem = HeaderItem("Case & Crew")
+        val headerItem = HeaderItem(1,"       Case & Crew")
         val listRow = ListRow(headerItem, arrayObjectAdapter)
         rootAdapter.add(listRow)
     }
 
-    fun setOnContentSelectedListener(listener: (DataModel.Result.Detail) -> Unit) {
+    fun setOnContentSelectedListener(listener: (com.guru.androidtv.model.Result) -> Unit) {
         this.itemSelectedListener = listener
     }
 
-    fun setOnItemClickListener(listener: (DataModel.Result.Detail) -> Unit) {
+    fun setOnItemClickListener(listener: (com.guru.androidtv.model.Result) -> Unit) {
         this.itemClickListener = listener
     }
 
@@ -71,7 +73,7 @@ class ListFragment : RowsSupportFragment() {
             rowViewHolder: RowPresenter.ViewHolder?,
             row: Row?
         ) {
-            if (item is DataModel.Result.Detail) {
+            if (item is com.guru.androidtv.model.Result) {
                 itemSelectedListener?.invoke(item)
             }
         }
@@ -82,9 +84,15 @@ class ListFragment : RowsSupportFragment() {
             rowViewHolder: RowPresenter.ViewHolder?,
             row: Any?
         ) {
-            if (item is DataModel.Result.Detail) {
+            if (item is com.guru.androidtv.model.Result) {
                 itemClickListener?.invoke(item)
             }
         }
+    }
+
+    fun requestFocus(): View {
+        val view = view
+        view?.requestFocus()
+        return view!!
     }
 }

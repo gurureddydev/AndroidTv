@@ -1,4 +1,4 @@
-package com.guru.androidtv.fragments
+package com.guru.androidtv.ui.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

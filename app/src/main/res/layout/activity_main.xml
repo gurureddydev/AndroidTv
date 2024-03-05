@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
     <FrameLayout
         android:id="@+id/container"
@@ -15,6 +15,7 @@
     <androidx.leanback.widget.BrowseFrameLayout
         android:id="@+id/blfNavBar"
         android:layout_width="50dp"
+        android:visibility="invisible"
         android:layout_height="match_parent"
         android:background="#000000"
         android:nextFocusLeft="@id/container">

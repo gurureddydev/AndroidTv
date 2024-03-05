@@ -1,11 +1,13 @@
-package com.guru.androidtv
+package com.guru.androidtv.presenter
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.leanback.widget.Presenter
 import com.bumptech.glide.Glide
 import com.guru.androidtv.databinding.ItemViewBinding
+import com.guru.androidtv.model.Result
+import com.guru.androidtv.utils.Common.Companion.getHeightInPercent
+import com.guru.androidtv.utils.Common.Companion.getWidthInPercent
 
 class ItemPresenter : Presenter() {
     private lateinit var binding: ItemViewBinding
@@ -22,18 +24,8 @@ class ItemPresenter : Presenter() {
         return ViewHolder(binding.root)
     }
 
-    fun getWidthInPercent(context: Context, percent: Int): Int {
-        val width = context.resources.displayMetrics.widthPixels
-        return (width * percent) / 100
-    }
-
-    fun getHeightInPercent(context: Context, percent: Int): Int {
-        val height = context.resources.displayMetrics.heightPixels
-        return (height * percent) / 100
-    }
-
     override fun onBindViewHolder(viewHolder: ViewHolder, item: Any?) {
-        val content = item as? DataModel.Result.Detail
+        val content = item as? Result
         val url = "https://www.themoviedb.org/t/p/w500" + content?.poster_path
         Glide.with(viewHolder.view.context)
             .load(url)

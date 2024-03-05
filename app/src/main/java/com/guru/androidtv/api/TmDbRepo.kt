@@ -1,16 +1,16 @@
 package com.guru.androidtv.api
 
-
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.guru.androidtv.model.CastResponse
 import com.guru.androidtv.model.DetailResponse
 import com.guru.androidtv.utils.Constants.API_KEY
 
-class TmDbRepo(val service: ApiService) {
+class TmDbRepo(private val service: ApiService) {
 
-    val detailData = MutableLiveData<Response<DetailResponse>>()
-    val castData = MutableLiveData<Response<CastResponse>>()
+    private val detailData = MutableLiveData<Response<DetailResponse>>()
+    private val castData = MutableLiveData<Response<CastResponse>>()
 
     val movieDetail: LiveData<Response<DetailResponse>>
         get() = detailData
@@ -19,17 +19,19 @@ class TmDbRepo(val service: ApiService) {
         get() = castData
 
     suspend fun getMovieDetails(id: Int) {
-
         try {
             val result = service.getMovieDetails(id, API_KEY)
 
-            if (result.body() != null) {
+            if (result.isSuccessful) {
                 detailData.postValue(Response.Success(result.body()))
+                Log.d("TmDbRepo", "Movie details retrieved successfully")
             } else {
                 detailData.postValue(Response.Error(result.errorBody().toString()))
+                Log.e("TmDbRepo", "Error getting movie details: ${result.message()}")
             }
         } catch (e: Exception) {
             detailData.postValue(Response.Error(e.message.toString()))
+            Log.e("TmDbRepo", "Exception getting movie details: ${e.message}")
         }
     }
 
@@ -37,13 +39,16 @@ class TmDbRepo(val service: ApiService) {
         try {
             val result = service.getMovieCast(id, API_KEY)
 
-            if (result.body() != null) {
+            if (result.isSuccessful) {
                 castData.postValue(Response.Success(result.body()))
+                Log.d("TmDbRepo", "Cast details retrieved successfully")
             } else {
                 castData.postValue(Response.Error(result.errorBody().toString()))
+                Log.e("TmDbRepo", "Error getting cast details: ${result.message()}")
             }
         } catch (e: Exception) {
             castData.postValue(Response.Error(e.message.toString()))
+            Log.e("TmDbRepo", "Exception getting cast details: ${e.message}")
         }
     }
 }
