@@ -1,130 +1,133 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <FrameLayout
-        android:id="@+id/container"
+    <merge
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:nextFocusRight="@id/blfNavBar" />
+        tools:context=".ui.MainActivity">
 
-    <androidx.leanback.widget.BrowseFrameLayout
-        android:id="@+id/blfNavBar"
-        android:layout_width="50dp"
-        android:visibility="invisible"
-        android:layout_height="match_parent"
-        android:background="#000000"
-        android:nextFocusLeft="@id/container">
-
-        <LinearLayout
+        <FrameLayout
+            android:id="@+id/container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_marginTop="32dp"
-            android:orientation="vertical">
+            android:nextFocusRight="@id/blfNavBar" />
 
-            <TextView
-                android:id="@+id/btn_search"
+        <androidx.leanback.widget.BrowseFrameLayout
+            android:id="@+id/blfNavBar"
+            android:layout_width="50dp"
+            android:layout_height="match_parent"
+            android:background="#000000"
+            android:nextFocusLeft="@id/container"
+            android:visibility="invisible">
+
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginStart="16dp"
-                android:background="@drawable/selector_menu"
-                android:drawableStart="@drawable/search_18"
-                android:drawablePadding="16dp"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:text="Search" />
+                android:layout_height="match_parent"
+                android:layout_marginTop="32dp"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/btn_home"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginStart="16dp"
-                android:background="@drawable/selector_menu"
-                android:drawableStart="@drawable/ic_home"
-                android:drawablePadding="16dp"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:text="Home" />
+                <TextView
+                    android:id="@+id/btn_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/selector_menu"
+                    android:drawableStart="@drawable/search_18"
+                    android:drawablePadding="16dp"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:text="Search" />
 
-            <TextView
-                android:id="@+id/btn_movies"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginStart="16dp"
-                android:background="@drawable/selector_menu"
-                android:drawableStart="@drawable/ic_movie"
-                android:drawablePadding="16dp"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:text="Movies" />
+                <TextView
+                    android:id="@+id/btn_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/selector_menu"
+                    android:drawableStart="@drawable/ic_home"
+                    android:drawablePadding="16dp"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:text="Home" />
 
-            <TextView
-                android:id="@+id/btn_tv"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginStart="16dp"
-                android:background="@drawable/selector_menu"
-                android:drawableStart="@drawable/ic_live"
-                android:drawablePadding="16dp"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:text="Tv Shows" />
+                <TextView
+                    android:id="@+id/btn_movies"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/selector_menu"
+                    android:drawableStart="@drawable/ic_movie"
+                    android:drawablePadding="16dp"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:text="Movies" />
 
-            <TextView
-                android:id="@+id/btn_sports"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginStart="16dp"
-                android:background="@drawable/selector_menu"
-                android:drawableStart="@drawable/ic_sports_cricket"
-                android:drawablePadding="16dp"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:text="Sports" />
+                <TextView
+                    android:id="@+id/btn_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/selector_menu"
+                    android:drawableStart="@drawable/ic_live"
+                    android:drawablePadding="16dp"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:text="Tv Shows" />
 
-            <TextView
-                android:id="@+id/btn_settings"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginStart="16dp"
-                android:background="@drawable/selector_menu"
-                android:drawableStart="@drawable/ic_settings"
-                android:drawablePadding="16dp"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:text="Settings" />
+                <TextView
+                    android:id="@+id/btn_sports"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/selector_menu"
+                    android:drawableStart="@drawable/ic_sports_cricket"
+                    android:drawablePadding="16dp"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:text="Sports" />
 
-            <TextView
-                android:id="@+id/btn_language"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginStart="16dp"
-                android:background="@drawable/selector_menu"
-                android:drawableStart="@drawable/ic_language"
-                android:drawablePadding="16dp"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:text="language" />
+                <TextView
+                    android:id="@+id/btn_settings"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/selector_menu"
+                    android:drawableStart="@drawable/ic_settings"
+                    android:drawablePadding="16dp"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:text="Settings" />
 
-            <TextView
-                android:id="@+id/btn_genre"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:layout_marginStart="16dp"
-                android:background="@drawable/selector_menu"
-                android:drawableStart="@drawable/lc_help"
-                android:drawablePadding="16dp"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:text="Help" />
+                <TextView
+                    android:id="@+id/btn_language"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/selector_menu"
+                    android:drawableStart="@drawable/ic_language"
+                    android:drawablePadding="16dp"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:text="language" />
 
-        </LinearLayout>
+                <TextView
+                    android:id="@+id/btn_genre"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:layout_marginStart="16dp"
+                    android:background="@drawable/selector_menu"
+                    android:drawableStart="@drawable/lc_help"
+                    android:drawablePadding="16dp"
+                    android:focusable="true"
+                    android:gravity="center_vertical"
+                    android:text="Help" />
 
-    </androidx.leanback.widget.BrowseFrameLayout>
+            </LinearLayout>
+
+        </androidx.leanback.widget.BrowseFrameLayout>
 
 
-</merge>
+    </merge>
+</layout>

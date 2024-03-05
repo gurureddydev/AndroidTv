@@ -5,10 +5,12 @@ import android.view.KeyEvent
 import android.view.View
 import android.widget.FrameLayout
 import android.widget.TextView
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.leanback.widget.BrowseFrameLayout
 import com.guru.androidtv.R
+import com.guru.androidtv.databinding.ActivityMainBinding
 import com.guru.androidtv.ui.fragments.HelpFragment
 import com.guru.androidtv.ui.fragments.LanguageFragment
 import com.guru.androidtv.ui.fragments.MovieFragment
@@ -20,55 +22,32 @@ import com.guru.androidtv.utils.Common
 import com.guru.androidtv.utils.Constants
 
 class MainActivity : FragmentActivity(), View.OnKeyListener {
-    lateinit var navBar: BrowseFrameLayout
-    lateinit var fragmentContainer: FrameLayout
-
-    lateinit var btnSearch: TextView
-    lateinit var btnHome: TextView
-    lateinit var btnTvShow: TextView
-    lateinit var btnMovie: TextView
-    lateinit var btnSports: TextView
-    lateinit var btnSetting: TextView
-    lateinit var btnLanguage: TextView
-    lateinit var btnGenre: TextView
-
+    private lateinit var binding: ActivityMainBinding
+    lateinit var lastSelectedMenu: View
     var SIDE_MENU = false
     var selectedMenu = Constants.MENU_HOME
-    lateinit var lastSelectedMenu: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        fragmentContainer = findViewById(R.id.container)
-        navBar = findViewById(R.id.blfNavBar)
-        btnSearch = findViewById(R.id.btn_search)
-        btnHome = findViewById(R.id.btn_home)
-        btnTvShow = findViewById(R.id.btn_tv)
-        btnMovie = findViewById(R.id.btn_movies)
-        btnSports = findViewById(R.id.btn_sports)
-        btnSetting = findViewById(R.id.btn_settings)
-        btnLanguage = findViewById(R.id.btn_language)
-        btnGenre = findViewById(R.id.btn_genre)
+        binding.apply {
+            val buttons = arrayOf(
+                btnSearch,
+                btnHome,
+                btnTv,
+                btnMovies,
+                btnSports,
+                btnSettings,
+                btnLanguage,
+                btnGenre
+            )
 
-        btnSearch.setOnKeyListener(this)
-        btnHome.setOnKeyListener(this)
-        btnTvShow.setOnKeyListener(this)
-        btnMovie.setOnKeyListener(this)
-        btnSports.setOnKeyListener(this)
-        btnSetting.setOnKeyListener(this)
-        btnLanguage.setOnKeyListener(this)
-        btnGenre.setOnKeyListener(this)
+            buttons.forEach { it.setOnKeyListener(this@MainActivity) }
+        }
 
-        btnHome.setOnKeyListener(this)
-        btnTvShow.setOnKeyListener(this)
-        btnMovie.setOnKeyListener(this)
-        btnSports.setOnKeyListener(this)
-        btnSetting.setOnKeyListener(this)
-        btnLanguage.setOnKeyListener(this)
-        btnGenre.setOnKeyListener(this)
 
-        lastSelectedMenu = btnHome
+        lastSelectedMenu = binding.btnHome
         lastSelectedMenu.isActivated = true
         changeFragment(HomeFragment())
     }
@@ -164,46 +143,46 @@ class MainActivity : FragmentActivity(), View.OnKeyListener {
     fun switchToLastSelectedMenu() {
         when (selectedMenu) {
             Constants.MENU_SEARCH -> {
-                btnSearch.requestFocus()
+                binding.btnSearch.requestFocus()
             }
 
             Constants.MENU_HOME -> {
-                btnHome.requestFocus()
+                binding.btnHome.requestFocus()
             }
 
             Constants.MENU_TV -> {
-                btnTvShow.requestFocus()
+                binding.btnTv.requestFocus()
             }
 
             Constants.MENU_MOVIE -> {
-                btnMovie.requestFocus()
+                binding.btnMovies.requestFocus()
             }
 
             Constants.MENU_SPORTS -> {
-                btnSports.requestFocus()
+                binding.btnSports.requestFocus()
             }
 
             Constants.MENU_LANGUAGE -> {
-                btnLanguage.requestFocus()
+                binding.btnLanguage.requestFocus()
             }
 
             Constants.MENU_GENRES -> {
-                btnGenre.requestFocus()
+                binding.btnGenre.requestFocus()
             }
 
             Constants.MENU_SETTINGS -> {
-                btnSetting.requestFocus()
+                binding.btnSettings.requestFocus()
             }
         }
     }
 
     fun openMenu() {
-        navBar.requestLayout()
-        navBar.layoutParams.width = Common.getWidthInPercent(this, 16)
+        binding.blfNavBar.requestLayout()
+        binding.blfNavBar.layoutParams.width = Common.getWidthInPercent(this, 16)
     }
 
     fun closeMenu() {
-        navBar.requestLayout()
-        navBar.layoutParams.width = Common.getWidthInPercent(this, 16)
+        binding.blfNavBar.requestLayout()
+        binding.blfNavBar.layoutParams.width = Common.getWidthInPercent(this, 16)
     }
 }
