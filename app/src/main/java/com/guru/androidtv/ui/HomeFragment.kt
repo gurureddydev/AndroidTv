@@ -10,17 +10,16 @@ import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.guru.androidtv.R
 import com.guru.androidtv.databinding.FragmentHomeBinding
+import com.guru.androidtv.model.Result
 import com.guru.androidtv.viewmodel.HomeFragmentViewModel
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: HomeFragmentViewModel
-    val listFragment = ListFragment()
+    private val listFragment = ListFragment()
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
         viewModel = ViewModelProvider(this).get(HomeFragmentViewModel::class.java)
@@ -33,7 +32,7 @@ class HomeFragment : Fragment() {
         viewModelObserver()
 
         listFragment.setOnContentSelectedListener {
-            // update views
+            updateUI(it)
         }
 
         listFragment.setOnItemClickListener {
@@ -43,23 +42,25 @@ class HomeFragment : Fragment() {
         }
     }
 
+    private fun updateUI(selectedContent: Result) {
+        binding.title.text = selectedContent.title
+        binding.subtitle.text = "Language: ${selectedContent.original_language}"
+        binding.description.text = selectedContent.overview
+
+        val imageUrl = "https://www.themoviedb.org/t/p/w500${selectedContent.poster_path}"
+        Glide.with(requireContext()).load(imageUrl).into(binding.imgBanner)
+    }
+
     private fun viewModelObserver() {
         viewModel.dataList.observe(viewLifecycleOwner) { dataList ->
             val firstResult = dataList.results.firstOrNull()
             listFragment.bindData(dataList)
+
             if (firstResult != null) {
-                // Access and update UI components with the data from the first result
-                binding.title.text = firstResult.title
-                binding.subtitle.text = "Language: ${firstResult.original_language}"
-                binding.description.text = firstResult.overview
-                val imageUrl = "https://www.themoviedb.org/t/p/w500${firstResult.poster_path}"
-                Glide.with(requireContext())
-                    .load(imageUrl)
-                    .into(binding.imgBanner)
+                updateUI(firstResult)
             }
         }
     }
-
 
     private fun addFragment(castFragment: ListFragment) {
         val transaction = childFragmentManager.beginTransaction()

@@ -1,6 +1,8 @@
 package com.guru.androidtv.player
 
 import android.content.Context
+import android.view.KeyEvent
+import android.view.View
 import androidx.leanback.media.PlaybackTransportControlGlue
 import androidx.leanback.widget.Action
 import androidx.leanback.widget.ArrayObjectAdapter
@@ -27,11 +29,36 @@ class CustomTransportControlGlue(context: Context, playerAdapter: BasicMediaPlay
     }
 
     override fun onActionClicked(action: Action) {
-        when(action){
+        when (action) {
             forwardAction -> playerAdapter.fastForward()
             rewindAction -> playerAdapter.rewind()
             else -> super.onActionClicked(action)
         }
-       onUpdateProgress()
+        onUpdateProgress()
+    }
+
+    override fun onKey(v: View?, keyCode: Int, event: KeyEvent?): Boolean {
+        host?.let { host ->
+            if (host.isControlsOverlayVisible || (event?.repeatCount ?: 0) > 0) {
+                return super.onKey(v, keyCode, event)
+            }
+            return when (keyCode) {
+                KeyEvent.KEYCODE_DPAD_RIGHT -> {
+                    if (event?.action != KeyEvent.ACTION_DOWN) false else {
+                        onActionClicked(forwardAction)
+                        true
+                    }
+                }
+
+                KeyEvent.KEYCODE_DPAD_LEFT -> {
+                    if (event?.action != KeyEvent.ACTION_DOWN) false else {
+                        onActionClicked(rewindAction)
+                        true
+                    }
+                }
+
+                else -> super.onKey(v, keyCode, event)
+            }
+        } ?: return super.onKey(v, keyCode, event)
     }
 }
