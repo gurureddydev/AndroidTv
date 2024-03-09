@@ -1,4 +1,4 @@
 <resources>
 
-    <style name="Theme.AndroidTv" parent="Theme.AppCompat.DayNight.NoActionBar" />
+    <style name="Theme.AndroidTv" parent="Theme.MaterialComponents.NoActionBar" />
 </resources>

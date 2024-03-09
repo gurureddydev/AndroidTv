@@ -9,6 +9,9 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+
 
     <application
         android:name="AndroidTvApp"
@@ -22,6 +25,9 @@
             android:name=".ui.DetailActivity"
             android:exported="true" />
         <activity
+            android:name=".player.PlaybackActivity"
+            android:exported="true" />
+        <activity
             android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>
@@ -29,7 +35,7 @@
                 <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".player.PlaybackActivity"/>
+
     </application>
 
 </manifest>

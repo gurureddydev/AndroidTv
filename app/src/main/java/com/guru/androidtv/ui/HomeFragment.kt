@@ -33,7 +33,7 @@ class HomeFragment : Fragment() {
         viewModelObserver()
 
         listFragment.setOnContentSelectedListener {
-            //
+            // update views
         }
 
         listFragment.setOnItemClickListener {

@@ -16,9 +16,9 @@ class CastItemPresenter : Presenter() {
     override fun onCreateViewHolder(parent: ViewGroup): ViewHolder {
         binding = CastItemViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-        val params = binding.root.layoutParams
-        params.width = getWidthInPercent(parent.context, 15)
-        params.height = getHeightInPercent(parent.context, 20)
+//        val params = binding.root.layoutParams
+//        params.width = getWidthInPercent(parent.context, 15)
+//        params.height = getHeightInPercent(parent.context, 20)
 
         return ViewHolder(binding.root)
     }
@@ -33,7 +33,6 @@ class CastItemPresenter : Presenter() {
             .placeholder(R.drawable.baseline_person_24)
             .apply(RequestOptions.circleCropTransform())
             .into(binding.castImg)
-
     }
 
     override fun onUnbindViewHolder(viewHolder: ViewHolder) {
