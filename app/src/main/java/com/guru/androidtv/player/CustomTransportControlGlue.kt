@@ -11,6 +11,7 @@ import androidx.leanback.widget.PlaybackControlsRow
 class CustomTransportControlGlue(context: Context, playerAdapter: BasicMediaPlayerAdapter) :
     PlaybackTransportControlGlue<BasicMediaPlayerAdapter>(context, playerAdapter) {
 
+
     private val forwardAction = PlaybackControlsRow.FastForwardAction(context)
     private val rewindAction = PlaybackControlsRow.RewindAction(context)
     private val nextAction = PlaybackControlsRow.SkipNextAction(context)

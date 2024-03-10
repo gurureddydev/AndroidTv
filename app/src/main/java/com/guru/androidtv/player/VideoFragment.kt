@@ -81,8 +81,10 @@ class VideoFragment : VideoSupportFragment() {
         rewindIndicatorView = inflater.inflate(R.layout.view_rewind, view, false)
         view.addView(rewindIndicatorView)
 
+
         return view
     }
+
 
     fun animateIndicator(indicator: View) {
         indicator.animate()
