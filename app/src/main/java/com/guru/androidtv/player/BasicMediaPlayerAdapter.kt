@@ -2,7 +2,6 @@ package com.guru.androidtv.player
 
 import android.content.Context
 import androidx.leanback.media.MediaPlayerAdapter
-import androidx.leanback.media.PlaybackBannerControlGlue.ACTION_
 import androidx.leanback.media.PlaybackBannerControlGlue.ACTION_FAST_FORWARD
 import androidx.leanback.media.PlaybackBannerControlGlue.ACTION_PLAY_PAUSE
 import androidx.leanback.media.PlaybackBannerControlGlue.ACTION_REWIND
@@ -10,6 +9,9 @@ import androidx.leanback.media.PlaybackBannerControlGlue.ACTION_SKIP_TO_NEXT
 import androidx.leanback.media.PlaybackBannerControlGlue.ACTION_SKIP_TO_PREVIOUS
 
 class BasicMediaPlayerAdapter(context: Context) : MediaPlayerAdapter(context) {
+
+    val currentTime: Int
+        get() = mediaPlayer?.currentPosition ?: 0
 
     val playList = ArrayList<String>()
     var playListPosition = 0

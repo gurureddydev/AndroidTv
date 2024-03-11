@@ -93,6 +93,6 @@ class ListFragment : RowsSupportFragment() {
     fun requestFocus(): View {
         val view = view
         view?.requestFocus()
-        return view!!
+        return view ?: throw NullPointerException("Expression 'view' must not be null")
     }
 }

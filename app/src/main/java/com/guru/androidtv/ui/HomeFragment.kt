@@ -43,12 +43,16 @@ class HomeFragment : Fragment() {
     }
 
     private fun updateUI(selectedContent: Result) {
-        binding.title.text = selectedContent.title
-        binding.subtitle.text = "Language: ${selectedContent.original_language}"
-        binding.description.text = selectedContent.overview
+        binding.apply {
+            title.text = selectedContent.title ?: "No title available"
+            subtitle.text =
+                "Language: ${selectedContent.original_language}" ?: "No subTitle available"
+            description.text = selectedContent.overview ?: "No overview available"
+        }
 
-        val imageUrl = "https://www.themoviedb.org/t/p/w500${selectedContent.poster_path}"
-        Glide.with(requireContext()).load(imageUrl).into(binding.imgBanner)
+        val imageUrl = "https://www.themoviedb.org/t/p/w500${selectedContent.backdrop_path}"
+        Glide.with(requireContext()).load(imageUrl).placeholder(R.drawable.ic_live)
+            .error(R.drawable.ic_live).into(binding.imgBanner)
     }
 
     private fun viewModelObserver() {

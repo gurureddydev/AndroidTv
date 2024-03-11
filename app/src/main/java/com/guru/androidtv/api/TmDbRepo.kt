@@ -5,12 +5,16 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.guru.androidtv.model.CastResponse
 import com.guru.androidtv.model.DetailResponse
+import com.guru.androidtv.model.VideoResponse
 import com.guru.androidtv.utils.Constants.API_KEY
 
 class TmDbRepo(private val service: ApiService) {
 
     private val detailData = MutableLiveData<Response<DetailResponse>>()
     private val castData = MutableLiveData<Response<CastResponse>>()
+    private val videoData = MutableLiveData<Response<VideoResponse>>()
+    val movieVideos: LiveData<Response<VideoResponse>>
+        get() = videoData
 
     val movieDetail: LiveData<Response<DetailResponse>>
         get() = detailData
@@ -49,6 +53,23 @@ class TmDbRepo(private val service: ApiService) {
         } catch (e: Exception) {
             castData.postValue(Response.Error(e.message.toString()))
             Log.e("TmDbRepo", "Exception getting cast details: ${e.message}")
+        }
+    }
+
+    suspend fun getMovieVideos(id: Int) {
+        try {
+            val result = service.getMovieVideos(id, API_KEY)
+
+            if (result.isSuccessful) {
+                videoData.postValue(Response.Success(result.body()))
+                Log.d("TmDbRepo", "Movie videos retrieved successfully")
+            } else {
+                videoData.postValue(Response.Error(result.errorBody().toString()))
+                Log.e("TmDbRepo", "Error getting movie videos: ${result.message()}")
+            }
+        } catch (e: Exception) {
+            videoData.postValue(Response.Error(e.message.toString()))
+            Log.e("TmDbRepo", "Exception getting movie videos: ${e.message}")
         }
     }
 }

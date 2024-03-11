@@ -1,5 +1,9 @@
 package com.guru.androidtv.model
 
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
 data class DetailResponse(
     val adult: Boolean = false,
     val backdrop_path: String = "",
@@ -26,34 +30,39 @@ data class DetailResponse(
     val video: Boolean = false,
     val vote_average: Double = 0.0,
     val vote_count: Int = 0
-) {
+) : Parcelable {
+    @Parcelize
     data class BelongsToCollection(
         val backdrop_path: String = "",
         val id: Int = 0,
         val name: String = "",
         val poster_path: String = ""
-    )
+    ) : Parcelable
 
+    @Parcelize
     data class Genre(
         val id: Int = 0,
         val name: String = ""
-    )
+    ) : Parcelable
 
+    @Parcelize
     data class ProductionCompany(
         val id: Int = 0,
-        val logo_path: String = "",
+        val logo_path: String? = ""?: null,
         val name: String = "",
         val origin_country: String = ""
-    )
+    ) : Parcelable
 
+    @Parcelize
     data class ProductionCountry(
         val iso_3166_1: String = "",
         val name: String = ""
-    )
+    ) : Parcelable
 
+    @Parcelize
     data class SpokenLanguage(
         val english_name: String = "",
         val iso_639_1: String = "",
         val name: String = ""
-    )
+    ) : Parcelable
 }

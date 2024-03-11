@@ -1,16 +1,22 @@
 package com.guru.androidtv.player
 
 import android.content.Context
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
 import android.view.KeyEvent
 import android.view.View
 import androidx.leanback.media.PlaybackTransportControlGlue
 import androidx.leanback.widget.Action
 import androidx.leanback.widget.ArrayObjectAdapter
 import androidx.leanback.widget.PlaybackControlsRow
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
+import com.guru.androidtv.model.DetailResponse
+import com.guru.androidtv.utils.Common
 
 class CustomTransportControlGlue(context: Context, playerAdapter: BasicMediaPlayerAdapter) :
     PlaybackTransportControlGlue<BasicMediaPlayerAdapter>(context, playerAdapter) {
-
 
     private val forwardAction = PlaybackControlsRow.FastForwardAction(context)
     private val rewindAction = PlaybackControlsRow.RewindAction(context)
@@ -22,12 +28,15 @@ class CustomTransportControlGlue(context: Context, playerAdapter: BasicMediaPlay
     }
 
     override fun onCreatePrimaryActions(primaryActionsAdapter: ArrayObjectAdapter) {
-        primaryActionsAdapter.add(previousAction)
-        primaryActionsAdapter.add(rewindAction)
-        super.onCreatePrimaryActions(primaryActionsAdapter)
-        primaryActionsAdapter.add(forwardAction)
-        primaryActionsAdapter.add(nextAction)
+        primaryActionsAdapter.apply {
+            add(previousAction)
+            add(rewindAction)
+            super.onCreatePrimaryActions(this)
+            add(forwardAction)
+            add(nextAction)
+        }
     }
+
 
     override fun onActionClicked(action: Action) {
         when (action) {
@@ -61,5 +70,29 @@ class CustomTransportControlGlue(context: Context, playerAdapter: BasicMediaPlay
                 else -> super.onKey(v, keyCode, event)
             }
         } ?: return super.onKey(v, keyCode, event)
+    }
+
+    fun loadMovieInfo(detailResponse: DetailResponse?) {
+        title = detailResponse?.original_title
+        subtitle = detailResponse?.let { Common.getSubtitle(it) }
+
+        val path = "https://www.themoviedb.org/t/p/w780" + (detailResponse?.backdrop_path ?: "")
+        Glide.with(context)
+            .asBitmap()
+            .load(path)
+            .into(object : CustomTarget<Bitmap>() {
+                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                    controlsRow?.setImageBitmap(context, resource)
+                    host?.notifyPlaybackRowChanged()
+                }
+
+                override fun onLoadCleared(placeholder: Drawable?) {
+                    controlsRow?.setImageBitmap(context, null)
+                    host?.notifyPlaybackRowChanged()
+                }
+            })
+
+        playWhenPrepared()
+
     }
 }

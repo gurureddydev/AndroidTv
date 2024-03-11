@@ -5,6 +5,7 @@ import android.content.Context
 import android.view.Window
 import android.widget.TextView
 import com.guru.androidtv.R
+import com.guru.androidtv.model.DetailResponse
 
 class Common {
     companion object {
@@ -46,6 +47,24 @@ class Common {
             }
 
             dialog.show()
+        }
+
+        fun getSubtitle(response: DetailResponse): String {
+            val rating = if (response.adult) {
+                "18+"
+            } else {
+                "13+"
+            }
+            val genres = response.genres.joinToString(
+                prefix = " ",
+                postfix = " • ",
+                separator = " • "
+            ) { it.name }
+
+            val hours: Int = response.runtime / 60
+            val min: Int = response.runtime % 60
+
+            return rating + genres + hours + "h " + min + "m"
         }
     }
 }

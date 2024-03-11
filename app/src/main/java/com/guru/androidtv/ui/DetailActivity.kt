@@ -16,6 +16,7 @@ import com.guru.androidtv.databinding.ActivityDetailBinding
 import com.guru.androidtv.model.DetailResponse
 import com.guru.androidtv.player.PlaybackActivity
 import com.guru.androidtv.utils.Common
+import com.guru.androidtv.utils.Common.Companion.getSubtitle
 import com.guru.androidtv.utils.Common.Companion.isEllipsized
 import com.guru.androidtv.viewmodel.DetailViewModel
 import com.guru.androidtv.viewmodel.DetailViewModelFactory
@@ -24,6 +25,7 @@ class DetailActivity : FragmentActivity() {
     private lateinit var binding: ActivityDetailBinding
     lateinit var viewModel: DetailViewModel
     val castFragment = ListFragment()
+    var detailResponse: DetailResponse? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,7 +48,7 @@ class DetailActivity : FragmentActivity() {
                 }
 
                 is Response.Success -> {
-
+                    detailResponse = it.data
                     setData(it.data)
                 }
 
@@ -75,6 +77,7 @@ class DetailActivity : FragmentActivity() {
         }
 
 
+
         binding.addToMylist.setOnKeyListener { view, keyCode, keyEvent ->
             when (keyCode) {
                 KeyEvent.KEYCODE_DPAD_DOWN -> {
@@ -88,10 +91,36 @@ class DetailActivity : FragmentActivity() {
         }
 
         binding.play.setOnClickListener {
+//            viewModel.movieVideos.observe(this) { response ->
+//                when (response) {
+//                    is Response.Success -> {
+//                        val videoItem = response.data?.results?.find { it.type == "Trailer" }
+//                        videoItem?.let { playVideo(it.key) }
+//                    }
+//
+//                    is Response.Error -> {
+//                        // Handle error
+//                    }
+//
+//                    is Response.Loading -> {
+//                        // Show loading indicator if needed
+//                    }
+//                }
+//            }
             val intent = Intent(this, PlaybackActivity::class.java)
+//            intent.putExtra("video_key", videoKey)
+            intent.putExtra("movie_detail", detailResponse)
             startActivity(intent)
         }
     }
+
+    private fun playVideo(videoKey: String) {
+        val intent = Intent(this, PlaybackActivity::class.java)
+        intent.putExtra("video_key", videoKey)
+        intent.putExtra("movie_detail", detailResponse)
+        startActivity(intent)
+    }
+
 
     private fun addFragment(castFragment: ListFragment) {
         val transaction = supportFragmentManager.beginTransaction()
@@ -104,7 +133,7 @@ class DetailActivity : FragmentActivity() {
         binding.subtitle.text = response?.let { response -> getSubtitle(response) }
         binding.description.text = response?.overview
 
-        val path = "https://www.themoviedb.org/t/p/w780" + (response?.backdrop_path ?: "")
+        val path = "https://www.themoviedb.org/t/p/w500" + (response?.backdrop_path ?: "")
         Glide.with(this)
             .load(path)
             .into(binding.imgBanner)
@@ -122,25 +151,6 @@ class DetailActivity : FragmentActivity() {
                     )
                 }
             }
-
         }
-    }
-
-    fun getSubtitle(response: DetailResponse): String {
-        val rating = if (response.adult) {
-            "18+"
-        } else {
-            "13+"
-        }
-        val genres = response.genres.joinToString(
-            prefix = " ",
-            postfix = " • ",
-            separator = " • "
-        ) { it.name }
-
-        val hours: Int = response.runtime / 60
-        val min: Int = response.runtime % 60
-
-        return rating + genres + hours + "h " + min + "m"
     }
 }
