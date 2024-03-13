@@ -63,7 +63,7 @@
             android:fontFamily="sans-serif-black"
             android:text="Avatar : The way of water"
             android:textColor="@color/color_white"
-            android:textSize="26sp"
+            android:textSize="30sp"
             app:layout_constraintStart_toEndOf="@id/guideline_start"
             app:layout_constraintTop_toBottomOf="@id/guideline_top"
             app:layout_constraintWidth_default="percent"

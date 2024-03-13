@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.leanback.widget.Presenter
 import com.bumptech.glide.Glide
+import com.guru.androidtv.R
 import com.guru.androidtv.databinding.ItemViewBinding
 import com.guru.androidtv.model.Result
 import com.guru.androidtv.utils.Common.Companion.getHeightInPercent
@@ -28,11 +29,17 @@ class ItemPresenter : Presenter() {
         val content = item as? Result
         val url = "https://www.themoviedb.org/t/p/w500" + content?.poster_path
         Glide.with(viewHolder.view.context)
+            .clear(binding.posterImg) // Clear previous image
+        Glide.with(viewHolder.view.context)
             .load(url)
+            .error(R.drawable.ic_movie)
+            .placeholder(R.drawable.ic_movie)
             .into(binding.posterImg)
     }
 
+
     override fun onUnbindViewHolder(viewHolder: ViewHolder) {
         // Implement your unbinding logic here
+        Glide.with(viewHolder.view.context).clear(binding.posterImg)
     }
 }

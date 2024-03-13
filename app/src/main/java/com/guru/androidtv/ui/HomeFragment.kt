@@ -5,17 +5,24 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.viewpager.widget.PagerAdapter
+import androidx.viewpager.widget.ViewPager
 import com.bumptech.glide.Glide
 import com.guru.androidtv.R
 import com.guru.androidtv.databinding.FragmentHomeBinding
 import com.guru.androidtv.model.Result
+import com.guru.androidtv.ui.adapter.BannerAdapter
 import com.guru.androidtv.viewmodel.HomeFragmentViewModel
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: HomeFragmentViewModel
+    private lateinit var bannerAdapter: BannerAdapter
+
     private val listFragment = ListFragment()
 
     override fun onCreateView(
@@ -29,11 +36,11 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         addFragment(listFragment)
-        viewModelObserver()
+        bannerAdapter = BannerAdapter()
+        binding.bannerViewpager.adapter = bannerAdapter
+        bannerAdapter.startAutoScroll(binding.bannerViewpager) // Start auto-scrolling
 
-        listFragment.setOnContentSelectedListener {
-            updateUI(it)
-        }
+        viewModelObserver()
 
         listFragment.setOnItemClickListener {
             val intent = Intent(requireContext(), DetailActivity::class.java)
@@ -42,27 +49,11 @@ class HomeFragment : Fragment() {
         }
     }
 
-    private fun updateUI(selectedContent: Result) {
-        binding.apply {
-            title.text = selectedContent.title ?: "No title available"
-            subtitle.text =
-                "Language: ${selectedContent.original_language}" ?: "No subTitle available"
-            description.text = selectedContent.overview ?: "No overview available"
-        }
-
-        val imageUrl = "https://www.themoviedb.org/t/p/w500${selectedContent.backdrop_path}"
-        Glide.with(requireContext()).load(imageUrl).placeholder(R.drawable.ic_live)
-            .error(R.drawable.ic_live).into(binding.imgBanner)
-    }
-
     private fun viewModelObserver() {
         viewModel.dataList.observe(viewLifecycleOwner) { dataList ->
-            val firstResult = dataList.results.firstOrNull()
+            val results = dataList.results
+            bannerAdapter.setData(results)
             listFragment.bindData(dataList)
-
-            if (firstResult != null) {
-                updateUI(firstResult)
-            }
         }
     }
 

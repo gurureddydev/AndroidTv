@@ -15,6 +15,7 @@ import com.guru.androidtv.api.Response
 import com.guru.androidtv.databinding.ActivityDetailBinding
 import com.guru.androidtv.model.DetailResponse
 import com.guru.androidtv.player.PlaybackActivity
+import com.guru.androidtv.player.VideoPlayerActivity
 import com.guru.androidtv.utils.Common
 import com.guru.androidtv.utils.Common.Companion.getSubtitle
 import com.guru.androidtv.utils.Common.Companion.isEllipsized
@@ -110,6 +111,11 @@ class DetailActivity : FragmentActivity() {
             val intent = Intent(this, PlaybackActivity::class.java)
 //            intent.putExtra("video_key", videoKey)
             intent.putExtra("movie_detail", detailResponse)
+            startActivity(intent)
+        }
+
+        binding.moreLikeThis.setOnClickListener {
+            val intent = Intent(this, VideoPlayerActivity::class.java)
             startActivity(intent)
         }
     }

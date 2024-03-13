@@ -25,6 +25,10 @@
             android:name=".player.PlaybackActivity"
             android:exported="true" />
         <activity
+            android:name=".player.VideoPlayerActivity"
+            android:exported="true" />
+
+        <activity
             android:name=".ui.MainActivity"
             android:exported="true">
             <intent-filter>

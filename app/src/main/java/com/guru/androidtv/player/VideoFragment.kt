@@ -237,7 +237,6 @@ class VideoFragment : VideoSupportFragment() {
     }
 
     private fun startPlayer() {
-        // Start or resume the video playback.
         transportGlue.play()
     }
 

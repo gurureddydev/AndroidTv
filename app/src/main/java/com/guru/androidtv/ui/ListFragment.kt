@@ -35,10 +35,21 @@ class ListFragment : RowsSupportFragment() {
 
     fun bindData(dataList: DataModel) {
         rootAdapter.clear()
+        addRow(dataList, "Movies")
+        addRow(dataList, "Upcoming")
+        addRow(dataList, "Popular")
+    }
 
-        val header = HeaderItem(0, "Movies")
+    private fun addRow(dataList: DataModel, category: String) {
+        val header = HeaderItem(0, category)
         val arrayAdapter = ArrayObjectAdapter(ItemPresenter())
-        for ((index, result) in dataList.results.withIndex()) {
+        val list = when (category) {
+            "Movies" -> dataList.results
+            "Upcoming" -> dataList.results // Assuming this is your upcoming data list
+            "Popular" -> dataList.results // Assuming this is your popular data list
+            else -> emptyList() // Default empty list
+        }
+        for ((index, result) in list.withIndex()) {
             arrayAdapter.add(result)
             Log.d("ListFragment", "Adding item at index $index: $result")
         }
