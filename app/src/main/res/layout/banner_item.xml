@@ -12,15 +12,16 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/banner" />
 
     <TextView
         android:id="@+id/title_banner"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
-        android:layout_marginTop="300dp"
-        android:text="Title"
+        android:layout_marginTop="230dp"
+        android:text="@string/title"
         android:textColor="#fff"
         android:textSize="36sp"
         app:layout_constraintStart_toStartOf="parent"
@@ -34,13 +35,11 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="50dp"
         android:layout_marginTop="8dp"
-        android:text="Language : English"
+        android:text="@string/language_english"
         android:textColor="#fff"
         android:textSize="14sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/title_banner" />
-
-
 
         <!-- Play icon -->
         <ImageView
@@ -51,9 +50,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            android:contentDescription="Play Icon"
+            android:contentDescription="@string/play_icon"
             android:src="@drawable/ic_play" />
-
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

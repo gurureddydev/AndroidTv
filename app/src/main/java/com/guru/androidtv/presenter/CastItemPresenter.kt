@@ -15,11 +15,6 @@ class CastItemPresenter : Presenter() {
     private lateinit var binding: CastItemViewBinding
     override fun onCreateViewHolder(parent: ViewGroup): ViewHolder {
         binding = CastItemViewBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-
-//        val params = binding.root.layoutParams
-//        params.width = getWidthInPercent(parent.context, 15)
-//        params.height = getHeightInPercent(parent.context, 20)
-
         return ViewHolder(binding.root)
     }
 

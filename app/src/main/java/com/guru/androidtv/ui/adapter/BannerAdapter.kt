@@ -10,14 +10,11 @@ import com.bumptech.glide.Glide
 import com.guru.androidtv.R
 import com.guru.androidtv.model.Result
 import android.os.Handler
+import android.os.Looper
 import androidx.viewpager.widget.ViewPager
 
 class BannerAdapter : PagerAdapter() {
     private var dataList: List<Result> = listOf()
-    private var currentPosition = 0
-    private var handler: Handler? = null
-    private var autoScrollRunnable: Runnable? = null
-
     fun setData(data: List<Result>) {
         this.dataList = data
         notifyDataSetChanged()
@@ -51,15 +48,20 @@ class BannerAdapter : PagerAdapter() {
     }
 
     fun startAutoScroll(viewPager: ViewPager) {
-        handler = Handler()
-        autoScrollRunnable = Runnable {
-            if (currentPosition == dataList.size) {
-                currentPosition = 0
+        val handler = Handler(Looper.getMainLooper())
+        var currentPosition = 0
+
+        val autoScrollRunnable = object : Runnable {
+            override fun run() {
+                if (currentPosition == dataList.size) {
+                    currentPosition = 0
+                }
+                viewPager.currentItem = currentPosition
+                currentPosition++
+                handler.postDelayed(this, 3000)
             }
-            viewPager.currentItem = currentPosition
-            currentPosition++
-            handler?.postDelayed(autoScrollRunnable!!, 3000)
         }
-        handler?.postDelayed(autoScrollRunnable!!, 3000)
+
+        handler.postDelayed(autoScrollRunnable, 3000)
     }
 }

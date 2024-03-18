@@ -1,5 +1,6 @@
 package com.guru.androidtv.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -13,6 +14,9 @@ class HomeFragmentViewModel : ViewModel() {
     private val _dataList = MutableLiveData<DataModel>()
     val dataList: LiveData<DataModel> get() = _dataList
 
+    private val _topRatedList = MutableLiveData<DataModel>()
+    val topRatedList: LiveData<DataModel> get() = _topRatedList
+
     init {
         fetchData()
     }
@@ -20,10 +24,16 @@ class HomeFragmentViewModel : ViewModel() {
     private fun fetchData() {
         viewModelScope.launch {
             try {
-                val response = RetrofitInstance.getApiService().getMovies(API_KEY)
-                _dataList.value = response
+                // Fetch popular movies
+                val popularResponse = RetrofitInstance.getApiService().getMovies(API_KEY)
+                _dataList.value = popularResponse
+
+                // Fetch top-rated movies
+                val topRatedResponse = RetrofitInstance.getApiService().getTopRatedMovies(API_KEY)
+                _topRatedList.value = topRatedResponse
             } catch (e: Exception) {
                 // Handle error
+                Log.e("HomeFragmentViewModel", "Error fetching data: ${e.message}")
             }
         }
     }

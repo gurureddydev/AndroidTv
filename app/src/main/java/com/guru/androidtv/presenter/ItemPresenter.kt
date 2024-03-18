@@ -4,42 +4,55 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.leanback.widget.Presenter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
 import com.guru.androidtv.R
 import com.guru.androidtv.databinding.ItemViewBinding
 import com.guru.androidtv.model.Result
-import com.guru.androidtv.utils.Common.Companion.getHeightInPercent
-import com.guru.androidtv.utils.Common.Companion.getWidthInPercent
 
 class ItemPresenter : Presenter() {
-    private lateinit var binding: ItemViewBinding
     override fun onCreateViewHolder(parent: ViewGroup): ViewHolder {
-        binding = ItemViewBinding.inflate(
+        val context = parent.context
+      val  binding = ItemViewBinding.inflate(
             LayoutInflater.from(parent.context),
             parent,
             false
         )
-        val params = binding.root.layoutParams
-        params.width = parent.context?.let { getWidthInPercent(it, 12) } ?: 0
-        params.height = parent.context?.let { getHeightInPercent(it, 32) } ?: 0
 
+        val resources = context.resources
+        binding.root.setMainImageDimensions(
+            resources.getDimensionPixelSize(R.dimen.image_card_width),
+            resources.getDimensionPixelSize(R.dimen.image_card_height))
         return ViewHolder(binding.root)
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, item: Any?) {
         val content = item as? Result
+        val binding = ItemViewBinding.bind(viewHolder.view)
         val url = "https://www.themoviedb.org/t/p/w500" + content?.poster_path
-        Glide.with(viewHolder.view.context)
-            .clear(binding.posterImg) // Clear previous image
-        Glide.with(viewHolder.view.context)
-            .load(url)
+        binding.root.titleText = content?.original_title
+        val requestOptions = RequestOptions()
             .error(R.drawable.ic_movie)
             .placeholder(R.drawable.ic_movie)
-            .into(binding.posterImg)
+            .diskCacheStrategy(DiskCacheStrategy.ALL) // Cache both original & resized image
+
+        // Preload the image to optimize loading time
+        Glide.with(viewHolder.view.context)
+            .load(url)
+            .apply(requestOptions)
+            .preload()
+
+        // Load the image into the ImageView
+        binding.root.mainImageView?.let { img ->
+            Glide.with(viewHolder.view.context)
+                .load(url)
+                .apply(requestOptions)
+                .into(img)
+        }
     }
 
-
     override fun onUnbindViewHolder(viewHolder: ViewHolder) {
-        // Implement your unbinding logic here
-        Glide.with(viewHolder.view.context).clear(binding.posterImg)
+        val binding = ItemViewBinding.bind(viewHolder.view)
+        binding.root.mainImage = null
     }
 }

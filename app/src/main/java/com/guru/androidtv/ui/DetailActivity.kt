@@ -41,7 +41,8 @@ class DetailActivity : FragmentActivity() {
             DetailViewModelFactory(repository, movieId)
         ).get(DetailViewModel::class.java)
 
-        viewModel.movieDetail.observe(this) {
+        viewModel.
+        movieDetail.observe(this) {
             Log.d("Details_Activity", "${it.data}")
             when (it) {
                 is Response.Loading -> {
@@ -92,26 +93,32 @@ class DetailActivity : FragmentActivity() {
         }
 
         binding.play.setOnClickListener {
-//            viewModel.movieVideos.observe(this) { response ->
-//                when (response) {
-//                    is Response.Success -> {
-//                        val videoItem = response.data?.results?.find { it.type == "Trailer" }
-//                        videoItem?.let { playVideo(it.key) }
-//                    }
-//
-//                    is Response.Error -> {
-//                        // Handle error
-//                    }
-//
-//                    is Response.Loading -> {
-//                        // Show loading indicator if needed
-//                    }
-//                }
-//            }
-            val intent = Intent(this, PlaybackActivity::class.java)
-//            intent.putExtra("video_key", videoKey)
-            intent.putExtra("movie_detail", detailResponse)
-            startActivity(intent)
+            viewModel.movieVideos.observe(this) { response ->
+                when (response) {
+                    is Response.Success -> {
+                        val videoItem = response.data?.results?.find { it.type == "Trailer" }
+                        videoItem?.let {
+                            // Extract the necessary information
+                            val videoKey = it.key
+                            val movieDetail = detailResponse  // Assuming detailResponse is the movie details
+
+                            // Start the PlaybackActivity and pass the information as extras
+                            val intent = Intent(this, PlaybackActivity::class.java)
+                            intent.putExtra("video_key", videoKey)
+                            intent.putExtra("movie_detail", movieDetail)
+                            startActivity(intent)
+                        }
+                    }
+
+                    is Response.Error -> {
+                        // Handle error
+                    }
+
+                    is Response.Loading -> {
+                        // Show loading indicator if needed
+                    }
+                }
+            }
         }
 
         binding.moreLikeThis.setOnClickListener {

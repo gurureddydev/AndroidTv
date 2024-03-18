@@ -2,24 +2,17 @@ package com.guru.androidtv.ui
 
 import android.os.Bundle
 import android.util.Log
+import android.view.MotionEvent
 import android.view.View
 import androidx.leanback.app.RowsSupportFragment
-import androidx.leanback.widget.ArrayObjectAdapter
-import androidx.leanback.widget.BaseOnItemViewClickedListener
-import androidx.leanback.widget.FocusHighlight
-import androidx.leanback.widget.HeaderItem
-import androidx.leanback.widget.ListRow
-import androidx.leanback.widget.ListRowPresenter
-import androidx.leanback.widget.OnItemViewSelectedListener
-import androidx.leanback.widget.Presenter
-import androidx.leanback.widget.Row
-import androidx.leanback.widget.RowPresenter
-import com.guru.androidtv.presenter.CastItemPresenter
-import com.guru.androidtv.presenter.ItemPresenter
+import androidx.leanback.widget.*
 import com.guru.androidtv.model.CastResponse
 import com.guru.androidtv.model.DataModel
+import com.guru.androidtv.presenter.CastItemPresenter
+import com.guru.androidtv.presenter.ItemPresenter
 
 class ListFragment : RowsSupportFragment() {
+
     private var itemSelectedListener: ((com.guru.androidtv.model.Result) -> Unit)? = null
     private var itemClickListener: ((com.guru.androidtv.model.Result) -> Unit)? = null
     private var rootAdapter: ArrayObjectAdapter =
@@ -27,32 +20,27 @@ class ListFragment : RowsSupportFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         adapter = rootAdapter
         onItemViewClickedListener = ItemViewSelectedListener()
-
     }
 
     fun bindData(dataList: DataModel) {
         rootAdapter.clear()
-        addRow(dataList, "Movies")
-        addRow(dataList, "Upcoming")
-        addRow(dataList, "Popular")
+        addRow(dataList, "Movies", dataList.results)
+    }
+    fun bindTopRatedData(topRatedData: DataModel) {
+        addRow(topRatedData, "Top Rated", topRatedData.results)
     }
 
-    private fun addRow(dataList: DataModel, category: String) {
+
+    private fun addRow(dataList: DataModel, category: String, list: List<com.guru.androidtv.model.Result>) {
         val header = HeaderItem(0, category)
         val arrayAdapter = ArrayObjectAdapter(ItemPresenter())
-        val list = when (category) {
-            "Movies" -> dataList.results
-            "Upcoming" -> dataList.results // Assuming this is your upcoming data list
-            "Popular" -> dataList.results // Assuming this is your popular data list
-            else -> emptyList() // Default empty list
-        }
         for ((index, result) in list.withIndex()) {
             arrayAdapter.add(result)
             Log.d("ListFragment", "Adding item at index $index: $result")
         }
+        arrayAdapter.addAll(0,dataList.results)
         val movieRow = ListRow(header, arrayAdapter)
         rootAdapter.add(movieRow)
     }
@@ -107,3 +95,4 @@ class ListFragment : RowsSupportFragment() {
         return view ?: throw NullPointerException("Expression 'view' must not be null")
     }
 }
+

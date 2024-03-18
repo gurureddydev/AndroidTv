@@ -126,34 +126,36 @@ class VideoFragment : VideoSupportFragment() {
         rewindIndicatorView = inflater.inflate(R.layout.view_rewind, view, false)
         view.addView(rewindIndicatorView)
 
+        setupGestureDetector(view)
         return view
     }
 
-//    private fun setupGestureDetector(view: ViewGroup) {
-//        view.setOnTouchListener(object : View.OnTouchListener {
-//            private val gestureDetector = GestureDetectorCompat(requireContext(), object :
-//                GestureDetector.SimpleOnGestureListener() {
-//                override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
-//                    togglePlayPause()
-//                    return true
-//                }
-//
-//                override fun onScroll(
-//                    e1: MotionEvent?,
-//                    e2: MotionEvent,
-//                    distanceX: Float,
-//                    distanceY: Float
-//                ): Boolean {
-//                    handleScroll(e1, e2, distanceX, distanceY)
-//                    return true
-//                }
-//            })
-//
-//            override fun onTouch(p0: View?, p1: MotionEvent): Boolean {
-//                return gestureDetector.onTouchEvent(p1)
-//            }
-//        })
-//    }
+    private fun setupGestureDetector(view: ViewGroup) {
+        view.setOnTouchListener(object : View.OnTouchListener {
+            private val gestureDetector = GestureDetectorCompat(requireContext(), object :
+                GestureDetector.SimpleOnGestureListener() {
+                override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
+                    togglePlayPause()
+                    return true
+                }
+
+                override fun onScroll(
+                    e1: MotionEvent?,
+                    e2: MotionEvent,
+                    distanceX: Float,
+                    distanceY: Float
+                ): Boolean {
+                    handleScroll(e1, e2, distanceX, distanceY)
+                    return true
+                }
+            })
+
+            @SuppressLint("ClickableViewAccessibility")
+            override fun onTouch(p0: View?, p1: MotionEvent): Boolean {
+                return gestureDetector.onTouchEvent(p1)
+            }
+        })
+    }
 
     private fun handleKeyEvents(keyCode: Int, event: KeyEvent?): Boolean {
         if (isControlsOverlayVisible || (event?.repeatCount ?: 0) > 0) {
@@ -203,6 +205,7 @@ class VideoFragment : VideoSupportFragment() {
             }
         }
     }
+
 
     private fun seekForward() {
         transportGlue.seekTo(transportGlue.currentPosition + SEEK_FORWARD_INTERVAL)

@@ -5,16 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.viewpager.widget.PagerAdapter
-import androidx.viewpager.widget.ViewPager
-import com.bumptech.glide.Glide
 import com.guru.androidtv.R
 import com.guru.androidtv.databinding.FragmentHomeBinding
-import com.guru.androidtv.model.Result
 import com.guru.androidtv.ui.adapter.BannerAdapter
 import com.guru.androidtv.viewmodel.HomeFragmentViewModel
 
@@ -22,7 +16,6 @@ class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: HomeFragmentViewModel
     private lateinit var bannerAdapter: BannerAdapter
-
     private val listFragment = ListFragment()
 
     override fun onCreateView(
@@ -54,6 +47,10 @@ class HomeFragment : Fragment() {
             val results = dataList.results
             bannerAdapter.setData(results)
             listFragment.bindData(dataList)
+        }
+
+        viewModel.topRatedList.observe(viewLifecycleOwner) { topRatedDataList ->
+            listFragment.bindTopRatedData(topRatedDataList)
         }
     }
 

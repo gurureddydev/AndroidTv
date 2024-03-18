@@ -11,6 +11,9 @@ object Constants {
     const val MENU_GENRES = "genres"
     const val MENU_SETTINGS = "settings"
 
+     val SWIPE_THRESHOLD = 100
+     val SEEK_FORWARD_INTERVAL = 10000 // 10 seconds
+     val SEEK_BACKWARD_INTERVAL = 10000 // 10 seconds
 
     /* Intent tags*/
     const val INTENT_MENU = "menu"

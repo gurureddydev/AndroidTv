@@ -1,16 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:clickable="true"
+<androidx.leanback.widget.ImageCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:theme="@style/VideoCardViewTheme"
+    android:layout_width="@dimen/image_card_width"
+    android:layout_height="wrap_content"
     android:focusable="true"
-    android:layout_height="match_parent">
-    
-    <ImageView
-        android:id="@+id/poster_img"
-        android:layout_margin="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:contentDescription="todo" />
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    android:focusableInTouchMode="true" />

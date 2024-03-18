@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.view.KeyEvent
+import android.view.MotionEvent
 import android.view.View
 import androidx.leanback.media.PlaybackTransportControlGlue
 import androidx.leanback.widget.Action
@@ -14,6 +15,8 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.guru.androidtv.model.DetailResponse
 import com.guru.androidtv.utils.Common
+import com.guru.androidtv.utils.Constants.SEEK_BACKWARD_INTERVAL
+import com.guru.androidtv.utils.Constants.SEEK_FORWARD_INTERVAL
 
 class CustomTransportControlGlue(context: Context, playerAdapter: BasicMediaPlayerAdapter) :
     PlaybackTransportControlGlue<BasicMediaPlayerAdapter>(context, playerAdapter) {
@@ -93,6 +96,5 @@ class CustomTransportControlGlue(context: Context, playerAdapter: BasicMediaPlay
             })
 
         playWhenPrepared()
-
     }
 }
