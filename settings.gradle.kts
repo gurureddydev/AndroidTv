@@ -16,4 +16,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "AndroidTv"
 include(":app")
- 
+include(":core_app")

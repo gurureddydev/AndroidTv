@@ -78,8 +78,6 @@ class DetailActivity : FragmentActivity() {
             }
         }
 
-
-
         binding.addToMylist.setOnKeyListener { view, keyCode, keyEvent ->
             when (keyCode) {
                 KeyEvent.KEYCODE_DPAD_DOWN -> {

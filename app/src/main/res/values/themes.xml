@@ -1,5 +1,4 @@
 <resources>
-
     <style name="Theme.AndroidTv" parent="Theme.MaterialComponents.NoActionBar" />
     <style name="VideoCardViewTheme">
         <item name="imageCardViewStyle">@style/CardViewStyle</item>

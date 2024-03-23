@@ -8,7 +8,6 @@ class AndroidTvApp : Application() {
     lateinit var tmDbRepo: TmDbRepo
     override fun onCreate() {
         super.onCreate()
-
         init()
     }
 

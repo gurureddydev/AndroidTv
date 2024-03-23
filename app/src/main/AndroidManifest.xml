@@ -10,10 +10,9 @@
         android:required="false" />
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 
     <application
-        android:name="AndroidTvApp"
+        android:name=".AndroidTvApp"
         android:allowBackup="true"
         android:usesCleartextTraffic="true"
         android:banner="@mipmap/ic_launcher"

@@ -7,14 +7,19 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.guru.androidtv.R
 import com.guru.androidtv.databinding.FragmentHomeBinding
 import com.guru.androidtv.ui.adapter.BannerAdapter
 import com.guru.androidtv.viewmodel.HomeFragmentViewModel
+import com.guru.core_app.AnalyticsModule
+import com.guru.core_app.AnalyticsTracker
+import com.guru.core_app.FirebaseAnalyticsTracker
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: HomeFragmentViewModel
+    private lateinit var analyticsTracker: AnalyticsTracker
     private lateinit var bannerAdapter: BannerAdapter
     private val listFragment = ListFragment()
 
@@ -30,15 +35,26 @@ class HomeFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         addFragment(listFragment)
         bannerAdapter = BannerAdapter()
+
         binding.bannerViewpager.adapter = bannerAdapter
         bannerAdapter.startAutoScroll(binding.bannerViewpager) // Start auto-scrolling
-
+        AnalyticsModule.initialize(requireContext())
+        analyticsTracker = AnalyticsModule.getTrackerBuilder().build()
         viewModelObserver()
 
-        listFragment.setOnItemClickListener {
+        listFragment.setOnItemClickListener { item ->
             val intent = Intent(requireContext(), DetailActivity::class.java)
-            intent.putExtra("id", it.id)
+            intent.putExtra("id", item.id)
             startActivity(intent)
+
+            // Log event with parameters
+            val params = mapOf(
+                FirebaseAnalytics.Param.ITEM_ID to item.id.toString(),
+                FirebaseAnalytics.Param.ITEM_NAME to item.original_title,
+                FirebaseAnalytics.Param.CONTENT_TYPE to item.poster_path
+            )
+
+            analyticsTracker.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, params)
         }
     }
 
